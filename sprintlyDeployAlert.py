@@ -28,7 +28,6 @@ def process(productNumber, changeLogPath):
     for line in commit_msg_file:
       if contains_sprintly_number(line):
         refs = refs.union(set(re.findall('\d+', line)))
-        print refs
     if len(refs) != 0:
         send_update(set(refs), productNumber)
 
@@ -49,7 +48,6 @@ def contains_sprintly_number(changelog):
         pattern = r'.*\b(' + '|'.join(valid_keywords) + r')\b\s(#[0-9]+([\.\s,]|$)).*'
         result = re.search(pattern, logLower)
         if result:
-            print 'Story number found!'
             return True
 
     except Exception as e:
@@ -62,7 +60,6 @@ def send_update(storynumbers, productNumber):
     data = urllib.urlencode(values)
     url = INDEX_SPRINTLY_DEPLOY_URL.format(productNumber)
     req = urllib2.Request(url, data)
-    print req.get_full_url()
     base64string = base64.encodestring(
                 '%s:%s' % (SPRINTLY_USER_ID, SPRINTLY_USER_KEY))[:-1]
     authheader =  "Basic %s" % base64string
