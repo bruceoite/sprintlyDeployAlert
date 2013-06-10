@@ -26,8 +26,8 @@ def process(productNumber, changeLogPath):
     commit_msg_file = open(changeLogPath, 'r')
     refs = set()
     for line in commit_msg_file:
-      if contains_sprintly_number(line):
-        refs = refs.union(set(re.findall('\d+', line)))
+        if contains_sprintly_number(line):
+          refs = refs.union(set(re.findall('\d+', line)))
     if len(refs) != 0:
         send_update(set(refs), productNumber)
 
@@ -48,7 +48,7 @@ def contains_sprintly_number(changelog):
         pattern = r'.*\b(' + '|'.join(valid_keywords) + r')\b\s(#[0-9]+([\.\s,]|$)).*'
         result = re.search(pattern, logLower)
         if result:
-            return True
+          return True
 
     except Exception as e:
         pass
